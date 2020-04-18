@@ -9,7 +9,8 @@ class ContainerWidgetParser extends WidgetParser {
     Alignment alignment = parseAlignment(map['alignment']);
     Color color = parseHexColor(map['color']);
     BoxConstraints constraints = parseBoxConstraints(map['constraints']);
-    //TODO: decoration, foregroundDecoration and transform properties to be implemented.
+    //TODO: foregroundDecoration and transform properties to be implemented.
+    Decoration decoration = parseBoxDecoration(map['decoration']);
     EdgeInsetsGeometry margin = parseEdgeInsetsGeometry(map['margin']);
     EdgeInsetsGeometry padding = parseEdgeInsetsGeometry(map['padding']);
     Map<String, dynamic> childMap = map['child'];
@@ -28,6 +29,7 @@ class ContainerWidgetParser extends WidgetParser {
       width: map['width'],
       height: map['height'],
       constraints: constraints,
+      decoration: decoration,
       child: child,
     );
 

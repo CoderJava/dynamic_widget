@@ -142,8 +142,7 @@ TextStyle parseTextStyle(Map<String, dynamic> map) {
   String fontFamily = map['fontFamily'];
   double fontSize = map['fontSize'];
   String fontWeight = map['fontWeight'];
-  FontStyle fontStyle =
-      'italic' == map['fontStyle'] ? FontStyle.italic : FontStyle.normal;
+  FontStyle fontStyle = 'italic' == map['fontStyle'] ? FontStyle.italic : FontStyle.normal;
 
   return TextStyle(
     color: parseHexColor(color),
@@ -258,8 +257,7 @@ BoxConstraints parseBoxConstraints(Map<String, dynamic> map) {
 
 EdgeInsetsGeometry parseEdgeInsetsGeometry(String edgeInsetsGeometryString) {
   //left,top,right,bottom
-  if (edgeInsetsGeometryString == null ||
-      edgeInsetsGeometryString.trim() == '') {
+  if (edgeInsetsGeometryString == null || edgeInsetsGeometryString.trim() == '') {
     return null;
   }
   var values = edgeInsetsGeometryString.split(",");
@@ -308,14 +306,10 @@ MainAxisSize parseMainAxisSize(String mainAxisSizeString) =>
     mainAxisSizeString == 'min' ? MainAxisSize.min : MainAxisSize.max;
 
 TextBaseline parseTextBaseline(String parseTextBaselineString) =>
-    'alphabetic' == parseTextBaselineString
-        ? TextBaseline.alphabetic
-        : TextBaseline.ideographic;
+    'alphabetic' == parseTextBaselineString ? TextBaseline.alphabetic : TextBaseline.ideographic;
 
 VerticalDirection parseVerticalDirection(String verticalDirectionString) =>
-    'up' == verticalDirectionString
-        ? VerticalDirection.up
-        : VerticalDirection.down;
+    'up' == verticalDirectionString ? VerticalDirection.up : VerticalDirection.down;
 
 BlendMode parseBlendMode(String blendModeString) {
   if (blendModeString == null || blendModeString.trim().length == 0) {
@@ -434,8 +428,8 @@ ImageRepeat parseImageRepeat(String imageRepeatString) {
 
 Rect parseRect(String fromLTRBString) {
   var strings = fromLTRBString.split(',');
-  return Rect.fromLTRB(double.parse(strings[0]), double.parse(strings[1]),
-      double.parse(strings[2]), double.parse(strings[3]));
+  return Rect.fromLTRB(
+      double.parse(strings[0]), double.parse(strings[1]), double.parse(strings[2]), double.parse(strings[3]));
 }
 
 FilterQuality parseFilterQuality(String filterQualityString) {
@@ -463,17 +457,9 @@ String getLoadMoreUrl(String url, int currentNo, int pageSize) {
 
   url = url.trim();
   if (url.contains("?")) {
-    url = url +
-        "&startNo=" +
-        currentNo.toString() +
-        "&pageSize=" +
-        pageSize.toString();
+    url = url + "&startNo=" + currentNo.toString() + "&pageSize=" + pageSize.toString();
   } else {
-    url = url +
-        "?startNo=" +
-        currentNo.toString() +
-        "&pageSize=" +
-        pageSize.toString();
+    url = url + "?startNo=" + currentNo.toString() + "&pageSize=" + pageSize.toString();
   }
   return url;
 }
@@ -612,12 +598,93 @@ DropCapPosition parseDropCapPosition(String value) {
   }
 }
 
-DropCap parseDropCap(Map<String, dynamic> map, BuildContext buildContext,
-    ClickListener listener) {
+DropCap parseDropCap(Map<String, dynamic> map, BuildContext buildContext, ClickListener listener) {
   return DropCap(
     width: map['width'],
     height: map['height'],
-    child:
-        DynamicWidgetBuilder.buildFromMap(map["child"], buildContext, listener),
+    child: DynamicWidgetBuilder.buildFromMap(map["child"], buildContext, listener),
+  );
+}
+
+double parseElevation(double elevation) {
+  if (elevation == null) {
+    return 1.0;
+  }
+  return elevation;
+}
+
+ShapeBorder parseRoundedRectangleBorder(Map<String, dynamic> map) {
+  if (map == null) {
+    return null;
+  }
+
+  return RoundedRectangleBorder(
+    side: parseBorderSide(map['side']),
+    borderRadius: parseBorderRadius(map['borderRadius']),
+  );
+}
+
+BorderSide parseBorderSide(Map<String, dynamic> map) {
+  if (map == null) {
+    return BorderSide.none;
+  }
+  return BorderSide(
+    color: parseHexColor(map['color']),
+    width: map.containsKey('width') ? map['width'] : 1.0,
+    style: BorderStyle.solid,
+  );
+}
+
+BorderRadius parseBorderRadius(String borderRadius) {
+  if (borderRadius == null || borderRadius.trim() == '') {
+    return BorderRadius.zero;
+  }
+  var values = borderRadius.split(',');
+  return BorderRadius.only(
+    topLeft: Radius.circular(double.parse(values[0])),
+    topRight: Radius.circular(double.parse(values[1])),
+    bottomRight: Radius.circular(double.parse(values[2])),
+    bottomLeft: Radius.circular(double.parse(values[3])),
+  );
+}
+
+Decoration parseBoxDecoration(Map<String, dynamic> map) {
+  if (map == null) {
+    return null;
+  }
+  return BoxDecoration(
+    color: parseHexColor(map['color']),
+    border: parseBoxBorder(map['border']),
+    borderRadius: parseBorderRadius(map['borderRadius']),
+    shape: parseBoxShape(map['shape']),
+    // TODO: image, boxShadow, gradient, backgroundBlendMode
+  );
+}
+
+BoxShape parseBoxShape(String boxShape) {
+  var rectangle = BoxShape.rectangle;
+  var circle = BoxShape.circle;
+  if (boxShape == null) {
+    return rectangle;
+  }
+
+  switch (boxShape) {
+    case "circle":
+      return circle;
+    case "rectangle":
+      return rectangle;
+    default:
+      return rectangle;
+  }
+}
+
+BoxBorder parseBoxBorder(Map<String, dynamic> map) {
+  if (map == null) {
+    return null;
+  }
+  return Border.all(
+    color: parseHexColor(map['color']),
+    width: map['width'] == null ? 1.0 : map['width'],
+    style: BorderStyle.solid,
   );
 }

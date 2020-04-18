@@ -6,7 +6,9 @@ import 'package:dynamic_widget/dynamic_widget/basic/align_widget_parser.dart';
 import 'package:dynamic_widget/dynamic_widget/basic/aspectratio_widget_parser.dart';
 import 'package:dynamic_widget/dynamic_widget/basic/baseline_widget_parser.dart';
 import 'package:dynamic_widget/dynamic_widget/basic/button_widget_parser.dart';
+import 'package:dynamic_widget/dynamic_widget/basic/card_widget_parser.dart';
 import 'package:dynamic_widget/dynamic_widget/basic/center_widget_parser.dart';
+import 'package:dynamic_widget/dynamic_widget/basic/clip_oval_widget_parser.dart';
 import 'package:dynamic_widget/dynamic_widget/basic/container_widget_parser.dart';
 import 'package:dynamic_widget/dynamic_widget/basic/dropcaptext_widget_parser.dart';
 import 'package:dynamic_widget/dynamic_widget/basic/expanded_widget_parser.dart';
@@ -67,7 +69,9 @@ class DynamicWidgetBuilder {
     IconWidgetParser(),
     ClipRRectWidgetParser(),
     SafeAreaWidgetParser(),
-    ListTileWidgetParser()
+    ListTileWidgetParser(),
+    CardWidgetParser(),
+    ClipOvalWidgetParser(),
   ];
 
   static final _widgetNameParserMap = <String, WidgetParser>{};

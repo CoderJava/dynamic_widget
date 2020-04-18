@@ -4,11 +4,9 @@ import 'package:flutter/widgets.dart';
 //Creates a box that will become as large as its parent allows.
 class ExpandedSizedBoxWidgetParser extends WidgetParser {
   @override
-  Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickListener listener) {
+  Widget parse(Map<String, dynamic> map, BuildContext buildContext, ClickListener listener) {
     return SizedBox.expand(
-      child: DynamicWidgetBuilder.buildFromMap(
-          map["child"], buildContext, listener),
+      child: DynamicWidgetBuilder.buildFromMap(map["child"], buildContext, listener),
     );
   }
 
@@ -18,13 +16,13 @@ class ExpandedSizedBoxWidgetParser extends WidgetParser {
 
 class SizedBoxWidgetParser extends WidgetParser {
   @override
-  Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickListener listener) {
+  Widget parse(Map<String, dynamic> map, BuildContext buildContext, ClickListener listener) {
     return SizedBox(
       width: map["width"],
       height: map["height"],
-      child: DynamicWidgetBuilder.buildFromMap(
-          map["child"], buildContext, listener),
+      child: map.containsKey('child')
+          ? DynamicWidgetBuilder.buildFromMap(map["child"], buildContext, listener)
+          : null,
     );
   }
 
